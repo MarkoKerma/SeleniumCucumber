@@ -1,18 +1,15 @@
 const helpers = require("../runtime/helpers");
-
+const EL_SELECTORS = {
+    orderAmountInput: by.name("order_amount"),
+    applyWidgetChangesButton: by.id("btn_create_widget"),
+    widgetHTMLCode: by.id("widget_html"),
+    pageHTML: by.tagName("html"),
+};
 module.exports = {
-    elements: {
-        orderAmountInput: by.name("order_amount"),
-        applyWidgetChangesButton: by.id("btn_create_widget"),
-        widgetHTMLCode: by.id("widget_html"),
-        pageHTML: by.tagName("html"),
-    },
-
     // comment
     addFIATAmountForWidget: (amount) => {
-        const orderAmountInput = page.widgetPage.elements.orderAmountInput;
-        const applyWidgetChangesButton =
-            page.widgetPage.elements.applyWidgetChangesButton;
+        const orderAmountInput = EL_SELECTORS.orderAmountInput;
+        const applyWidgetChangesButton = EL_SELECTORS.applyWidgetChangesButton;
 
         driver.findElement(orderAmountInput).clear();
         driver.findElement(orderAmountInput).sendKeys(amount);
@@ -20,7 +17,7 @@ module.exports = {
     },
 
     copyAndReplaceWidgetCode: () => {
-        const widgetHTMLCode = page.widgetPage.elements.widgetHTMLCode;
+        const widgetHTMLCode = EL_SELECTORS.widgetHTMLCode;
         driver.sleep(3000);
         // helpers.waitUntilAttributeContains(
         //     widgetHTMLCode,

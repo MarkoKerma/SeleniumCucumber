@@ -1,24 +1,19 @@
 const { expect } = require("chai");
-// import helpers from 'runtime';
 const helpers = require("../runtime/helpers");
-
+const EL_SELECTORS = {
+    recaptchaCheckoutBox: by.name("g-recaptcha-response"),
+    orderAmountLabelText: by.id("orderAmountBox"),
+};
 module.exports = {
-    elements: {
-        recaptchaCheckoutBox: by.name("g-recaptcha-response"),
-        orderAmountLabelText: by.id("orderAmountBox"),
-    },
-
     clickRecaptcha: () => {
-        const recaptchaCheckoutBox =
-            page.widgetCodePage.elements.recaptchaCheckoutBox;
+        const recaptchaCheckoutBox = EL_SELECTORS.recaptchaCheckoutBox;
         driver.switchTo().frame(0);
         helpers.clickWhenClickable(recaptchaCheckoutBox, 3000);
         driver.sleep(3000);
     },
 
     checkFIATAmountInWidget: (amount) => {
-        const orderAmountLabelText =
-            page.widgetCodePage.elements.orderAmountLabelText;
+        const orderAmountLabelText = EL_SELECTORS.orderAmountLabelText;
         helpers.waitForElementToLoad(orderAmountLabelText);
         return driver
             .findElement(orderAmountLabelText)

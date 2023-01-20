@@ -1,6 +1,6 @@
 module.exports = function () {
     this.Given(/^I login to Limitlex Forum Pay$/, () => {
-        return helpers.loadPage(page.loginPage.url + "/login");
+        return helpers.loadPage(shared.environmentConfig.baseUrl + "/login");
     });
 
     this.Given(/^open Widgets menu$/, () => {
@@ -8,7 +8,7 @@ module.exports = function () {
             shared.testData.username,
             shared.testData.password
         );
-        page.loginPage.enterCode();
+        page.loginPage.enterCode(shared.testData.twoFactorCode);
         return page.dashboardPage.loginFinished();
     });
 
@@ -25,10 +25,7 @@ module.exports = function () {
         page.widgetCodePage.clickRecaptcha();
     });
 
-    this.Then(
-        /^widget will open with correct amount "([^"]*)"$/,
-        (amount) => {
-            return page.widgetCodePage.checkFIATAmountInWidget(amount);
-        }
-    );
+    this.Then(/^widget will open with correct amount "([^"]*)"$/, (amount) => {
+        return page.widgetCodePage.checkFIATAmountInWidget(amount);
+    });
 };

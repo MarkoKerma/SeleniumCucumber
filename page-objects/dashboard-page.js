@@ -1,30 +1,25 @@
 const helpers = require("../runtime/helpers");
+const EL_SELECTORS = {
+    widgetPageButton: by.linkText("Widget"),
+    myAccount: by.xpath("/html/body/div[6]/div/div[1]/form/a[1]"),
+};
+const widgetPageUrl = shared.environmentConfig.baseUrl + "/payWidget.create";
+const dashboardUrl = shared.environmentConfig.baseUrl + "/";
 
 module.exports = {
-    elements: {
-        widgetPageButton: by.linkText("Widget"),
-        myAccount: by.xpath("/html/body/div[6]/div/div[1]/form/a[1]"),
-    },
-
     openWidgetPage: () => {
-        const widgetPageButton = page.dashboardPage.elements.widgetPageButton;
+        const widgetPageButton = EL_SELECTORS.widgetPageButton;
         driver.findElement(widgetPageButton).click();
-        helpers.waitURLToBe(
-            "https://payment-gateway-stage.dev.limitlex.io/payWidget.create"
-        );
+        helpers.waitURLToBe(widgetPageUrl);
         driver.getCurrentUrl().then(function (currentURL) {
-            expect(currentURL).equal(
-                "https://payment-gateway-stage.dev.limitlex.io/payWidget.create"
-            );
+            expect(currentURL).equal(widgetPageUrl);
         });
     },
 
     loginFinished: () => {
-        helpers.waitURLToBe("https://payment-gateway-stage.dev.limitlex.io/");
+        helpers.waitURLToBe(dashboardUrl);
         return driver.getCurrentUrl().then(function (currentURL) {
-            expect(currentURL).equal(
-                "https://payment-gateway-stage.dev.limitlex.io/"
-            );
+            expect(currentURL).equal(dashboardUrl);
         });
     },
 };
