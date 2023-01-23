@@ -8,7 +8,7 @@ module.exports = function () {
             shared.testData.username,
             shared.testData.password
         );
-        page.loginPage.enterCode(shared.testData.twoFactorCode);
+        page.twoFactorPage.enterCode(shared.testData.twoFactorCode);
         return page.dashboardPage.loginFinished();
     });
 

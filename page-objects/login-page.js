@@ -5,16 +5,22 @@ const EL_SELECTORS = {
     recaptchaCheckBox: by.name("g-recaptcha-response"),
     rememberMeCheckBox: by.id("stay_loggedin"),
     loginButton: by.xpath("/html/body/div[9]/div[2]/form/div[4]/div/input"),
-    codeInput: by.name("code"),
-    verifyButton: by.xpath('//*[@id="app"]/form/div[2]/div/input'),
 };
 const twoFactorUrl = shared.environmentConfig.baseUrl + "/login_step_two?";
 
 module.exports = {
+    /**
+     * Opens Login Page on ForumPay App
+     */
     goToLoginPage: () => {
         helpers.loadPage(shared.environmentConfig.baseUrl + "/login");
     },
 
+    /**
+     *  Logins user to the ForumPay App
+     * @param {String} userName - email of existing user
+     * @param {String} password - valid password of that user
+     */
     loginToApp: (userName, password) => {
         const emailInput = EL_SELECTORS.emailInput;
         const passwordInput = EL_SELECTORS.passwordInput;
@@ -30,12 +36,5 @@ module.exports = {
         driver.getCurrentUrl().then((currentURL) => {
             expect(currentURL).equal(twoFactorUrl);
         });
-    },
-
-    enterCode: (code) => {
-        const codeInput = EL_SELECTORS.codeInput;
-        const verifyButton = EL_SELECTORS.verifyButton;
-        driver.findElement(codeInput).sendKeys(code);
-        driver.findElement(verifyButton).click();
     },
 };

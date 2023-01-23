@@ -5,15 +5,26 @@ const EL_SELECTORS = {
 const cronsUrl = shared.environmentConfig.cronJobsUrl;
 
 module.exports = {
+    /**
+     * Opens CronJobs page on ForumPay
+     */
     openCronJobsPage: () => {
         return helpers.loadPage(cronsUrl);
     },
 
+    /**
+     *  Executes all CronJobs on CronJobs Page
+     */
     execAllCrons: () => {
+        const execAllButton = EL_SELECTORS.execAllButton;
         helpers.waitURLToBe(cronsUrl);
-        driver.sleep(3000);
+        driver.findElement(execAllButton).click();
     },
 
+    /**
+     * Waits for all CronJobs to be executed
+     * WIP - need to replace implicit timeout
+     */
     waitCronsToFinish: () => {
         driver.sleep(3000);
     },

@@ -7,6 +7,10 @@ const widgetPageUrl = shared.environmentConfig.baseUrl + "/payWidget.create";
 const dashboardUrl = shared.environmentConfig.baseUrl + "/";
 
 module.exports = {
+    /**
+     * Selects Widget section from Header menu
+     * waits for url to be url of widgets page
+     */
     openWidgetPage: () => {
         const widgetPageButton = EL_SELECTORS.widgetPageButton;
         driver.findElement(widgetPageButton).click();
@@ -16,6 +20,10 @@ module.exports = {
         });
     },
 
+    /**
+     * Assert that user successfully logged into app
+     * @returns assert
+     */
     loginFinished: () => {
         helpers.waitURLToBe(dashboardUrl);
         return driver.getCurrentUrl().then(function (currentURL) {
