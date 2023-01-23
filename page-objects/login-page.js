@@ -11,6 +11,10 @@ const EL_SELECTORS = {
 const twoFactorUrl = shared.environmentConfig.baseUrl + "/login_step_two?";
 
 module.exports = {
+    goToLoginPage: () => {
+        helpers.loadPage(shared.environmentConfig.baseUrl + "/login");
+    },
+
     loginToApp: (userName, password) => {
         const emailInput = EL_SELECTORS.emailInput;
         const passwordInput = EL_SELECTORS.passwordInput;

@@ -1,6 +1,6 @@
 module.exports = function () {
     this.Given(/^I login to Limitlex Forum Pay$/, () => {
-        return helpers.loadPage(shared.environmentConfig.baseUrl + "/login");
+        page.loginPage.goToLoginPage();
     });
 
     this.Given(/^open Widgets menu$/, () => {
@@ -17,8 +17,21 @@ module.exports = function () {
         page.widgetPage.addFIATAmountForWidget(amount);
     });
 
+    this.When(/^copy widget HTML$/, () => {
+        // page.widgetPage.copyAndReplaceWidgetCode();
+    });
+
+    this.When(/^open Cron Jobs page$/, () => {
+        return page.cronJobsPage.openCronJobsPage();
+    });
+
+    this.When(/^start Cron Jobs$/, () => {
+        page.cronJobsPage.execAllCrons();
+        page.cronJobsPage.waitCronsToFinish();
+    });
+
     this.When(/^use Widget Code in browser$/, () => {
-        page.widgetPage.copyAndReplaceWidgetCode();
+        // page.widgetPage.copyAndReplaceWidgetCode();
     });
 
     this.When(/^confirm I am not a robot$/, () => {
