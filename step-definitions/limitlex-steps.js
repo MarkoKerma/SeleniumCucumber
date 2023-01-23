@@ -18,7 +18,7 @@ module.exports = function () {
     });
 
     this.When(/^copy widget HTML$/, () => {
-        // page.widgetPage.copyAndReplaceWidgetCode();
+        page.widgetPage.copyWidgetCode();
     });
 
     this.When(/^open Cron Jobs page$/, () => {
@@ -31,7 +31,7 @@ module.exports = function () {
     });
 
     this.When(/^use Widget Code in browser$/, () => {
-        // page.widgetPage.copyAndReplaceWidgetCode();
+        page.widgetPage.replaceWidgetCode();
     });
 
     this.When(/^confirm I am not a robot$/, () => {

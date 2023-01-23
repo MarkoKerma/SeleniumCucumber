@@ -5,26 +5,34 @@ const EL_SELECTORS = {
     widgetHTMLCode: by.id("widget_html"),
     pageHTML: by.tagName("html"),
 };
+
+const orderAmountInputText = "order_amount=";
 module.exports = {
     // comment
     addFIATAmountForWidget: (amount) => {
         const orderAmountInput = EL_SELECTORS.orderAmountInput;
         const applyWidgetChangesButton = EL_SELECTORS.applyWidgetChangesButton;
+        const widgetHTMLCode = EL_SELECTORS.widgetHTMLCode;
 
         driver.findElement(orderAmountInput).clear();
         driver.findElement(orderAmountInput).sendKeys(amount);
         driver.findElement(applyWidgetChangesButton).click();
+        helpers.waitUntilAttributeContains(
+            widgetHTMLCode,
+            "value",
+            orderAmountInputText + amount
+        );
     },
 
-    copyAndReplaceWidgetCode: () => {
+    copyWidgetCode: () => {
         const widgetHTMLCode = EL_SELECTORS.widgetHTMLCode;
-        driver.sleep(3000);
-        // helpers.waitUntilAttributeContains(
-        //     widgetHTMLCode,
-        //     "value",
-        //     "order_amount=22",
-        //     5000
-        // );
-        helpers.replaceHTMLCode(widgetHTMLCode, "value");
+        this.widgetCode = helpers.getAttributeValueBySelector(
+            widgetHTMLCode,
+            "value"
+        );
+    },
+
+    replaceWidgetCode: () => {
+        helpers.replaceHTMLCode(this.widgetCode);
     },
 };

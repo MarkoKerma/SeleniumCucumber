@@ -3,18 +3,26 @@ const helpers = require("../runtime/helpers");
 const EL_SELECTORS = {
     recaptchaCheckoutBox: by.name("g-recaptcha-response"),
     orderAmountLabelText: by.id("orderAmountBox"),
+    recaptchaSection: by.id("pageRecaptcha"),
 };
+const styleValueWidgetPage =
+    "max-width: 500px; margin-left: auto; margin-right: auto; margin-top: 15px; display: none;";
 module.exports = {
     clickRecaptcha: () => {
         const recaptchaCheckoutBox = EL_SELECTORS.recaptchaCheckoutBox;
         driver.switchTo().frame(0);
         helpers.clickWhenClickable(recaptchaCheckoutBox, 3000);
-        driver.sleep(3000);
     },
 
     checkFIATAmountInWidget: (amount) => {
         const orderAmountLabelText = EL_SELECTORS.orderAmountLabelText;
-        helpers.waitForElementToLoad(orderAmountLabelText);
+        const recaptchaSection = EL_SELECTORS.recaptchaSection;
+        helpers.waitUntilAttributeEquals(
+            recaptchaSection,
+            "style",
+            styleValueWidgetPage,
+            5000
+        );
         return driver
             .findElement(orderAmountLabelText)
             .getText()
