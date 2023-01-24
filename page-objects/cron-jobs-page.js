@@ -35,7 +35,7 @@ module.exports = {
         driver
             .findElement(EL_SELECTORS.cronText)
             .getText()
-            .then(function (elText) {
+            .then((elText) => {
                 expect(elText).to.contain(btcCronExpectedText);
             });
         driver.switchTo().defaultContent();
@@ -43,7 +43,7 @@ module.exports = {
         driver
             .findElement(EL_SELECTORS.cronText)
             .getText()
-            .then(function (elText) {
+            .then((elText) => {
                 expect(elText).to.contain(setFeesCronExpectedText);
             });
         driver.switchTo().defaultContent();
