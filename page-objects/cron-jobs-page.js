@@ -1,9 +1,13 @@
 const helpers = require("../runtime/helpers");
 const EL_SELECTORS = {
     execAllButton: by.xpath("/html/body/div[2]/button"),
+    cronText: by.xpath("/html/body/pre"),
+    btcIframeId: "cron-3",
+    setFeesIframeId: "cron-56",
 };
 const cronsUrl = shared.environmentConfig.cronJobsUrl;
-
+const btcCronExpectedText = "Running test run !!one time check only!!";
+const setFeesCronExpectedText = "Starting fee recalculation for MERCHANTS";
 module.exports = {
     /**
      * Opens CronJobs page on ForumPay
@@ -22,10 +26,26 @@ module.exports = {
     },
 
     /**
-     * Waits for all CronJobs to be executed
-     * WIP - need to replace implicit timeout
+     * Waits for all CronJobs to be executed by checking two crons
+     * first with id 3 - checkUnconfirmedTransactions BTC and
+     * second with id 56 - setFeesByMonthlyVolume
      */
     waitCronsToFinish: () => {
-        driver.sleep(3000);
+        driver.switchTo().frame(EL_SELECTORS.btcIframeId);
+        driver
+            .findElement(EL_SELECTORS.cronText)
+            .getText()
+            .then(function (elText) {
+                expect(elText).to.contain(btcCronExpectedText);
+            });
+        driver.switchTo().defaultContent();
+        driver.switchTo().frame(EL_SELECTORS.setFeesIframeId);
+        driver
+            .findElement(EL_SELECTORS.cronText)
+            .getText()
+            .then(function (elText) {
+                expect(elText).to.contain(setFeesCronExpectedText);
+            });
+        driver.switchTo().defaultContent();
     },
 };
